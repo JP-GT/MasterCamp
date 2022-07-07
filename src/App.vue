@@ -1,16 +1,70 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+
+  <nav v-if="!isLogged()">
+    <router-link to="/register">Register</router-link> |
+    <router-link to="/login">Login</router-link> |
+  </nav>
+
+  <nav v-if="isLogged()">
+
+    <router-link to="/">Home</router-link> |
+    <router-link to="/AddProduct">AddProduct</router-link> |
+    <router-link to="/logout">Logout</router-link> |
+    <router-link  to="/list">Products List</router-link> |
+
+  </nav>
+
+
+  <router-view/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import VueJwtDecode from "vue-jwt-decode"
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+    data() {
+        return { user: {}, userBool: false, adminBool: false, guestBool: false
+        };
+    },
+    methods: {
+        getUserDetails() {
+            let token = localStorage.getItem("MasterCamp");
+            console.log(this.user);
+            let decoded = VueJwtDecode.decode(token);
+            this.user = decoded;
+            console.log(this.user);
+        },
+        isLogged() {
+            if (localStorage.getItem("MasterCamp")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        },
+        isUser() {
+            console.log(JSON.parse(localStorage.getItem("MasterCamp")).newUser.role === "user");
+            if (JSON.parse(localStorage.getItem("MasterCamp")).newUser.role === "user") {
+                return true;
+            }
+            else {
+                return false;
+            }
+        },
+        isAdmin() {
+            console.log(JSON.parse(localStorage.getItem("MasterCamp")).role === "admin");
+            if (JSON.parse(localStorage.getItem("MasterCamp")).role === "admin") {
+                return true;
+            }
+            else {
+                return false;
+            }
+        },
+        created() {
+            console.log(this.getUserDetails());
+        }
+    },
+  
 }
 </script>
 
@@ -21,6 +75,18 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+nav {
+  padding: 30px;
+}
+
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>
