@@ -4,15 +4,20 @@ import AddProduct from '../components/AddProduct.vue'
 import ProductList from '../components/ProductList.vue'
 import LoginUser from '../views/LoginView.vue'
 import RegisterUser from '../views/RegisterView.vue'
-import UserView from '../views/UserView.vue'
+import Home2 from "@/views/Home2";
 import UserList from '../components/UsersList.vue'
 import SearchProduct from '../components/SearchProduct.vue'
 import SearchUser from '../components/SearchUser.vue'
-import ProductUser from '../components/ProductUser.vue'
+
 import Logout from '../components/Logout.vue'
 
 
 const routes = [
+    {
+        path:"/Home2",
+        name:'Home2',
+        component: Home2
+    },
   {
     path: '/',
     name: 'home',
@@ -24,11 +29,7 @@ const routes = [
     name: 'add-product',
     component: AddProduct
   },
-  {
-      path: '/productUser',
-      name: 'basket-product',
-      component: ProductUser
-  },
+
   {
     path: '/logout',
     name: 'logout',
@@ -40,18 +41,11 @@ const routes = [
       component: ProductList
   },
   {
-      path: '/listUser',
-      name: 'list-user',
+      path: '/UsersList',
+      name: 'UsersList',
       component: UserList
   },
-  {
-    path: '/user',
-    name: 'user-body',
-    component: UserView,
-    meta: {
-        requiresAuth: true
-    }
-  },
+
   {
       path: '/login',
       name: 'login',

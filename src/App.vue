@@ -1,16 +1,17 @@
 <template>
-
+  <div :style="{'background-image':'url(https://www.pinterest.fr/pin/502010689706717116/)'}"></div>
   <nav v-if="!isLogged()">
-    <router-link to="/register">Register</router-link> |
+    | <router-link to="/register">Register</router-link> |
     <router-link to="/login">Login</router-link> |
   </nav>
 
   <nav v-if="isLogged()">
 
-    <router-link to="/">Home</router-link> |
-    <router-link to="/AddProduct">AddProduct</router-link> |
+    | <router-link to="/Home2">Home</router-link> |
+     <router-link to="/AddProduct">Send Files</router-link> |
     <router-link to="/logout">Logout</router-link> |
-    <router-link  to="/list">Products List</router-link> |
+    <router-link  to="/list">Boite de réception</router-link> |
+    <router-link  to="/UsersList">Users List</router-link> |
 
   </nav>
 
@@ -88,5 +89,6 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+
 }
 </style>

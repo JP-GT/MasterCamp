@@ -1,73 +1,75 @@
 <template>
-    <div class="list row">|
-        <div class="col-md-6">
-            <h4>Users List</h4>
-            <table>
-                <td>Name</td>
-                <td>Email</td>
-                <td>Role</td>
-                <tr v-for="(user, index) in users" :key="index">
-                    <td>{{user.fullName}}</td>
-                    <td>{{user.email}}</td>
-                    <td>{{user.role}}</td>
-                </tr>
-            </table>
-        </div>
-        <div class="col-md-6">
-            <router-view @refreshData="refreshList"></router-view>
-        </div>
+
+
+
+
+  <H1>Liste des Utilisateurs</H1>
+  <div>
+    <div v-for="liste in this.listes" v-bind:key="liste">
+      <h2>############################USER############################  </h2>
+      <div><h2>"ID :"</h2>{{liste._id}}</div>
+      <div><h2>"FullName :"</h2>{{liste.fullName}}</div>
+      <div><h2>"Email :"</h2>{{liste.email}}</div>
+
     </div>
-</template>
+  </div>
+
+
+
+
+
+
+</template >
 
 <script>
+
+
 import http from "../http-common";
+//import axios from "axios";
+
 
 export default {
-  name: "UsersList",
+  name: "ProductList",
   data() {
     return {
-      users: []
-    };
-  },
-  methods: {
-    /* eslint-disable no-console */
-    retrieveUsers() {
-      http
-        .get("/auth/users")
-        .then(response => {
-          this.users = response.data; // JSON are parsed automatically.
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-    refreshList() {
-      this.retrieveUsers();
-    },
-    deleteUser(user) {
-      http
-          .post("/usersDelete", user)
-          .then(response => {
-            console.log(response.data);
-            console.log(this.users.splice(this.users.indexOf(response), 1));
-          })
-          .catch(e => {
-            console.log(e);
-          });
+      test: null,
+      listes: null
     }
-    /* eslint-enable no-console */
+  },
+
+
+  methods: {
+
+    affichage(){
+      console.log("debut")
+      http.get('/auth/users',JSON.parse(localStorage.getItem("MasterCamp"))._id)
+          .then((r) => {
+            console.log("response", r);
+            this.listes = r.data
+
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    },
+
+
+
+
+
+
   },
   mounted() {
-    this.retrieveUsers();
+    this.$nextTick(this.affichage)
   }
-};
+}
+
+
 </script>
 
 <style>
-.list {
-  text-align: left;
-  max-width: 450px;
+.submitform {
+  max-width: 300px;
   margin: auto;
 }
 </style>
